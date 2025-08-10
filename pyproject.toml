@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "langchain-model-switcher"
+version = "0.1.0"
+description = "Minimalistic LangChain model switcher with MCP support"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.14"
+langchain = "^0.3.23"
+langchain-community = "^0.3.16" 
+langchain-anthropic = "^0.3.0"
+langchain-ollama = "^0.2.0"
+langchain-ibm = "^0.3.10"
+langchain-openai = "^0.3.16"
+anthropic = "^0.40.0"
+openai = "^1.77.0"
+websockets = "^12.0"
+pydantic = "^2.0.0"
+pyyaml = "^6.0"
+python-dotenv = "^1.0.0"
+wikipedia = "^1.4.0"
+langgraph = "^0.6.1"
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+pytest = "^8.0.0"
+black = "^24.0.0"
+isort = "^5.12.0"
+mypy = "^1.8.0"
+
+[tool.poetry.scripts]
+model-switcher = "src.mcp.server:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+minversion = "6.0"

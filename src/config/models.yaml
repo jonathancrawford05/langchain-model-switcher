@@ -1,0 +1,28 @@
+models:
+  watson:
+    class_name: "WatsonAdapter"
+    model_id: "ibm/granite-3-2-8b-instruct"
+    url: "https://us-south.ml.cloud.ibm.com"
+    project_id: "skills-network"
+    temperature: 0.1
+    
+  claude:
+    class_name: "ClaudeAdapter"
+    model_id: "claude-3-sonnet-20240229"
+    max_tokens: 4096
+    temperature: 0.1
+    
+  ollama:
+    class_name: "OllamaAdapter"
+    model_id: "llama3.1"
+    base_url: "http://localhost:11434"
+    temperature: 0.1
+    timeout: 60
+
+  openai:
+    class_name: "OpenAIAdapter"
+    model_id: "gpt-4.1-nano"
+    max_tokens: 4096
+    temperature: 0.1
+
+default_provider: "claude"
