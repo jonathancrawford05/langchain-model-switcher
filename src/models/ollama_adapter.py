@@ -15,7 +15,7 @@ class OllamaAdapter(ModelAdapter):
         """Initialize Ollama adapter."""
         super().__init__(**kwargs)
         
-        self.model_id = kwargs.get("model_id", "llama3.1")
+        self.model_id = kwargs.get("model_id", "llama3")
         self.base_url = kwargs.get("base_url", "http://localhost:11434")
         self.temperature = kwargs.get("temperature", 0.1)
         self.timeout = kwargs.get("timeout", 60)
@@ -40,10 +40,30 @@ class OllamaAdapter(ModelAdapter):
 
     def supports_tool_calling(self) -> bool:
         """Check if Ollama model supports tool calling."""
-        # Most modern Ollama models support tool calling
-        # This could be made more sophisticated based on specific model capabilities
-        tool_calling_models = ["llama3.1", "mistral", "qwen", "phi3"]
-        return any(model in self.model_id.lower() for model in tool_calling_models)
+        # Define models that support tool calling
+        tool_calling_models = {
+            "llama3.1": True,
+            "llama3.2": True, 
+            "mistral": True,
+            "mistral-nemo": True,
+            "qwen2.5": True,
+            "qwen": True,
+            "phi3": True,
+            "llama3": False,  # Base llama3 does NOT support tools
+            "llama2": False,
+        }
+        
+        # Check if the model ID matches any known tool-capable models
+        model_lower = self.model_id.lower()
+        
+        # First check exact matches
+        for model_name, supports_tools in tool_calling_models.items():
+            if model_name in model_lower:
+                return supports_tools
+        
+        # Default to True for unknown models (optimistic)
+        # Most modern models support tool calling
+        return True
 
     def get_langchain_model(self) -> BaseLanguageModel:
         """Get the underlying LangChain Ollama model."""

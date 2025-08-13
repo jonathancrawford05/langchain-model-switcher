@@ -3,7 +3,7 @@
 import os
 from typing import Optional, Dict, Any
 
-from ..models import ModelAdapter, WatsonAdapter, ClaudeAdapter, OllamaAdapter, OpenAIAdapter
+from ..models import ModelAdapter, WatsonAdapter, ClaudeAdapter, OllamaAdapter, OpenAIAdapter, PhiAdapter
 from ..config import get_model_config, get_current_provider
 
 
@@ -15,6 +15,7 @@ class ModelFactory:
         "ClaudeAdapter": ClaudeAdapter, 
         "OllamaAdapter": OllamaAdapter,
         "OpenAIAdapter": OpenAIAdapter,
+        "PhiAdapter": PhiAdapter,
     }
     
     @classmethod

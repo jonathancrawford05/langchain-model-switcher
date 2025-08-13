@@ -17,12 +17,73 @@ A minimalistic framework for seamlessly switching between different LLM provider
 |----------|--------|--------------|--------|
 | **IBM Watson** | Granite 3.2, Granite 3.3 | ✅ | Ready |
 | **Anthropic Claude** | Claude 3 Sonnet, Haiku, Opus | ✅ | Ready |
-| **Ollama** | Llama 3.1, Mistral, Qwen, Phi3 | ✅ | Ready |
+| **Ollama (Llama 3.1)** | Llama 3.1 | ✅ | **100% Local - No Cloud** |
+| **Phi (Microsoft)** | Phi-3 | ✅ | **100% Local - Compact** |
 | **OpenAI** | GPT-4, GPT-3.5 | ✅ | Configurable |
 
 ## 🏗️ Project Structure
 
 ```
+
+## 🎆 **NEW: Dual Model Setup**
+
+With the new architecture, you can now run **two separate local model providers**:
+
+- **`ollama`** → Llama 3.1 (4.7GB) - More capable, detailed reasoning
+- **`phi`** → Microsoft Phi-3 (2.2GB) - Compact, fast, efficient
+
+Both use the same Ollama server but are treated as separate model providers!
+
+## 🚀 **Quick Setup for Both Models**
+
+```bash
+# Install both models
+ollama run llama3.1
+ollama run phi3
+
+# Test the new setup
+python test_phi_integration.py
+```
+
+## 🔄 **Easy Switching**
+
+```python
+# Use Llama 3.1 (more capable)
+os.environ["MODEL_PROVIDER"] = "ollama"
+
+# Use Phi-3 (faster, smaller)
+os.environ["MODEL_PROVIDER"] = "phi"
+```
+
+
+
+**✅ Your data never leaves your machine with Ollama!**
+
+```bash
+# 1. Start Ollama server (if not already running)
+ollama serve
+
+# 2. Download and run a model (in another terminal)
+ollama run llama3.1
+
+# 3. Verify it works with our model switcher
+python verify_ollama_local.py
+
+# 4. Test with demo
+python demo_ollama_local.py
+```
+
+**Key Benefits:**
+- 🔒 **100% Private**: All processing on your local machine
+- 🌐 **Offline Ready**: Works without internet once models downloaded
+- ⚡ **Fast**: No network latency for inference
+- 💰 **Free**: No API costs after initial setup
+
+**How it works:**
+1. Ollama runs a local server on `http://localhost:11434`
+2. Our adapter connects to this local endpoint
+3. Zero data is sent to any cloud service
+4. Your queries are processed entirely on your hardware
 langchain-model-switcher/
 ├── src/
 │   ├── models/              # Model adapters
@@ -71,8 +132,10 @@ CLAUDE_API_KEY=your_claude_api_key_here
 # For OpenAI (if using)
 OPENAI_API_KEY=your_openai_api_key_here
 
-# For Ollama (if not using localhost)
-OLLAMA_BASE_URL=http://your-ollama-server:11434
+# For Ollama (100% Local - No Cloud Calls)
+# Just make sure Ollama is running: ollama serve
+OLLAMA_BASE_URL=http://localhost:11434  # Default, usually not needed
+OLLAMA_MODEL_ID=llama3.1                  # Or whatever model you have
 
 # For Watson (if not using Skills Network)
 WATSON_API_KEY=your_watson_api_key_here
@@ -95,9 +158,13 @@ import os
 os.environ["MODEL_PROVIDER"] = "claude"
 claude_model = get_model()
 
-# Switch to Ollama
+# Switch to Ollama (Llama 3.1)
 os.environ["MODEL_PROVIDER"] = "ollama"  
 ollama_model = get_model()
+
+# Switch to Phi (Microsoft Phi-3)
+os.environ["MODEL_PROVIDER"] = "phi"
+phi_model = get_model()
 
 # Switch to Watson
 os.environ["MODEL_PROVIDER"] = "watson"

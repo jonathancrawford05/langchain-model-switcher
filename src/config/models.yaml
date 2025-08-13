@@ -19,6 +19,13 @@ models:
     temperature: 0.1
     timeout: 60
 
+  phi:
+    class_name: "PhiAdapter"
+    model_id: "llama3.2" # Using Llama 3.2 as Phi-3 does not support tool calling
+    base_url: "http://localhost:11434"
+    temperature: 0.1
+    timeout: 60
+
   openai:
     class_name: "OpenAIAdapter"
     model_id: "gpt-4.1-nano"

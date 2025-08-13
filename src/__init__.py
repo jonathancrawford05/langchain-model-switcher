@@ -1,6 +1,6 @@
 """LangChain Model Switcher - A minimalistic framework for switching between LLM providers."""
 
-from .models import ModelAdapter, WatsonAdapter, ClaudeAdapter, OllamaAdapter, OpenAIAdapter
+from .models import ModelAdapter, WatsonAdapter, ClaudeAdapter, OllamaAdapter, OpenAIAdapter, PhiAdapter
 from .utils import ModelFactory, get_model
 from .config import get_model_config, get_current_provider
 
@@ -12,6 +12,7 @@ __all__ = [
     "ClaudeAdapter",
     "OllamaAdapter",
     "OpenAIAdapter",
+    "PhiAdapter",
     "ModelFactory",
     "get_model",
     "get_model_config",
