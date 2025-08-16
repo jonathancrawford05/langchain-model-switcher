@@ -167,7 +167,7 @@ secrets.yaml
 api_keys.txt
 
 # Model files (if any)
-models/
+# models/
 *.pkl
 *.model
 *.weights

@@ -45,7 +45,7 @@ class Settings(BaseModel):
         
         return cls(
             models=models,
-            default_provider=data.get('default_provider', 'claude')
+            default_provider=data.get('default_provider', 'llama3.2')
         )
 
 
